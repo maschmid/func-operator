@@ -1,0 +1,47 @@
+ARG GO_RUNTIME=registry.access.redhat.com/ubi9/ubi-minimal@sha256:d235f607e1d6d833f031db107dc42206e4dd4d5aa9142c43d3771fb7f9bea76a
+ARG PYTHON_RUNTIME=registry.access.redhat.com/ubi9/python-311:latest
+
+# Rewrite the registry references only in the CI build context. The production
+# CSV remains unchanged in the source tree.
+FROM $PYTHON_RUNTIME AS image-rewriter
+# The UBI Python image runs as a non-root user by default, while files copied
+# into the build stage are root-owned. The rewrite is only a build-time step
+# and needs write access to the copied manifests.
+USER 0
+WORKDIR /work
+COPY .tekton/images-mirror-set.yaml /work/.tekton/images-mirror-set.yaml
+COPY hack/openshift/replace-registry-images-with-konflux.py /work/hack/openshift/replace-registry-images-with-konflux.py
+COPY bundle/manifests /work/bundle/manifests
+RUN python3 /work/hack/openshift/replace-registry-images-with-konflux.py
+
+FROM $GO_RUNTIME
+
+# Core bundle labels.
+LABEL operators.operatorframework.io.bundle.mediatype.v1=registry+v1
+LABEL operators.operatorframework.io.bundle.manifests.v1=manifests/
+LABEL operators.operatorframework.io.bundle.metadata.v1=metadata/
+LABEL operators.operatorframework.io.bundle.package.v1=serverless-functions
+LABEL operators.operatorframework.io.bundle.channels.v1=candidate-v2
+LABEL operators.operatorframework.io.metrics.builder=operator-sdk-v1.42.2+git
+LABEL operators.operatorframework.io.metrics.mediatype.v1=metrics+v1
+LABEL operators.operatorframework.io.metrics.project_layout=go.kubebuilder.io/v4
+
+# Labels for testing.
+LABEL operators.operatorframework.io.test.mediatype.v1=scorecard+v1
+LABEL operators.operatorframework.io.test.config.v1=tests/scorecard/
+
+# Copy files to locations specified by labels.
+COPY --from=image-rewriter /work/bundle/manifests /manifests/
+COPY bundle/metadata /metadata/
+COPY bundle/tests/scorecard /tests/scorecard/
+
+LABEL name="openshift-serverless-tech-preview/functions-func-rhel9" \
+      com.redhat.component="openshift-serverless-functions-operator-bundle-container" \
+      version="2.0" \
+      release="1" \
+      summary="OpenShift Serverless Functions Operator bundle" \
+      description="Contains an OLM bundle of the OpenShift Serverless Functions Operator" \
+      io.k8s.display-name="OpenShift Serverless Functions Operator bundle" \
+      io.k8s.description="Contains an OLM bundle of the OpenShift Serverless Functions Operator" \
+      io.openshift.tags="openshift,serverless,functions,operator,bundle" \
+      maintainer="serverless-support@redhat.com"
