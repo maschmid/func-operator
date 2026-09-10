@@ -10,7 +10,7 @@ metadata:
     pipelinesascode.tekton.dev/on-cel-expression: event == "push" && target_branch
       == "bundle-main" && ("bundle.Dockerfile".pathChanged()
       || "bundle/***".pathChanged()
-      || ".tekton/functions-operator-bundle-*.yaml".pathChanged())
+      || ".tekton/functions-operator-bundle-push.yaml".pathChanged())
   labels:
     appstudio.openshift.io/application: serverless-functions
     appstudio.openshift.io/component: functions-operator-bundle
