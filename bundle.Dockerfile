@@ -1,4 +1,4 @@
-ARG GO_RUNTIME=registry.access.redhat.com/ubi9/ubi-minimal@sha256:d235f607e1d6d833f031db107dc42206e4dd4d5aa9142c43d3771fb7f9bea76a
+ARG GO_RUNTIME=registry.access.redhat.com/ubi9/ubi-minimal@sha256:f9837da6236ba91733dc2db80696d8905966f585808c429c809633744ce53bb4
 FROM $GO_RUNTIME
 
 # Core bundle labels.
