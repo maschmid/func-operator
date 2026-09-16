@@ -44,4 +44,5 @@ LABEL name="openshift-serverless-tech-preview/functions-func-rhel9" \
       io.k8s.display-name="OpenShift Serverless Functions Operator bundle" \
       io.k8s.description="Contains an OLM bundle of the OpenShift Serverless Functions Operator" \
       io.openshift.tags="openshift,serverless,functions,operator,bundle" \
-      maintainer="serverless-support@redhat.com"
+      maintainer="serverless-support@redhat.com" \
+      cpe="cpe:/a:redhat:openshift_serverless:2.0::el9"
