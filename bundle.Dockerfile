@@ -20,7 +20,7 @@ COPY bundle/manifests /manifests/
 COPY bundle/metadata /metadata/
 COPY bundle/tests/scorecard /tests/scorecard/
 
-LABEL name="openshift-serverless-tech-preview/functions-func-rhel9" \
+LABEL name="openshift-serverless-tech-preview/functions-operator-bundle" \
       com.redhat.component="openshift-serverless-functions-operator-bundle-container" \
       version="2.0" \
       release="1" \
