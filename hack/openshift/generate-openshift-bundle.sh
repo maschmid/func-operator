@@ -226,6 +226,18 @@ yq eval -i '
   .metadata.labels."operatorframework.io/arch.arm64" = "supported"
 ' "${CSV_FILE}"
 
+# Add required annotations
+yq eval -i '
+  .metadata.annotations."operators.openshift.io/valid-subscription" = "[\"OpenShift Container Platform\", \"OpenShift Platform Plus\"]" |
+  .metadata.annotations."features.operators.openshift.io/disconnected" = "false" |
+  .metadata.annotations."features.operators.openshift.io/fips-compliant" = "false" |
+  .metadata.annotations."features.operators.openshift.io/proxy-aware" = "false" |
+  .metadata.annotations."features.operators.openshift.io/tls-profiles" = "false" |
+  .metadata.annotations."features.operators.openshift.io/token-auth-aws" = "false" |
+  .metadata.annotations."features.operators.openshift.io/token-auth-azure" = "false" |
+  .metadata.annotations."features.operators.openshift.io/token-auth-gcp" = "false"
+' "${CSV_FILE}"
+
 # Add spec.relatedImages so OLM can mirror all operand images for
 # disconnected installs.
 yq eval -i "
