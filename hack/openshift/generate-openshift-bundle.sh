@@ -218,6 +218,11 @@ yq eval -i '
   .metadata.annotations."console.openshift.io/plugins" = "[\"console-functions-plugin\"]"
 ' "${CSV_FILE}"
 
+# Add suggested namespace annotation
+yq eval -i '
+  .metadata.annotations."operatorframework.io/suggested-namespace" = "openshift-serverless-functions"
+' "${CSV_FILE}"
+
 # Add multi-arch labels.
 yq eval -i '
   .metadata.labels."operatorframework.io/arch.amd64" = "supported" |
