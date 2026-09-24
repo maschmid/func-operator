@@ -29,7 +29,7 @@ metadata:
         }
       ]
     capabilities: Basic Install
-    createdAt: "2026-09-24T11:53:37Z"
+    createdAt: "2026-09-24T16:45:45Z"
     operators.operatorframework.io/builder: operator-sdk-v1.42.2+git
     operators.operatorframework.io/project_layout: go.kubebuilder.io/v4
     console.openshift.io/plugins: '["console-functions-plugin"]'
@@ -298,6 +298,15 @@ spec:
                 - get
                 - list
                 - watch
+            - apiGroups:
+                - networking.k8s.io
+              resources:
+                - networkpolicies
+              verbs:
+                - create
+                - delete
+                - update
+                - patch
           serviceAccountName: func-operator-controller-manager
         - rules:
             - apiGroups:
