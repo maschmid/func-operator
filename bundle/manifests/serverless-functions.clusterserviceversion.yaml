@@ -29,10 +29,11 @@ metadata:
         }
       ]
     capabilities: Basic Install
-    createdAt: "2026-09-17T12:28:01Z"
+    createdAt: "2026-09-24T11:53:37Z"
     operators.operatorframework.io/builder: operator-sdk-v1.42.2+git
     operators.operatorframework.io/project_layout: go.kubebuilder.io/v4
     console.openshift.io/plugins: '["console-functions-plugin"]'
+    operatorframework.io/suggested-namespace: openshift-serverless-functions
     operators.openshift.io/valid-subscription: '["OpenShift Container Platform", "OpenShift Platform Plus"]'
     features.operators.openshift.io/disconnected: "false"
     features.operators.openshift.io/fips-compliant: "false"
