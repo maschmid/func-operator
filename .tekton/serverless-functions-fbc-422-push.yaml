@@ -222,7 +222,7 @@ spec:
       - name: OPM_OUTPUT_PATH
         value: "catalogs/v4.22/catalog/serverless-functions/catalog.json"
       - name: IDMS_PATH
-        value: ""
+        value: ".tekton/images-mirror-set.yaml"
       runAfter:
       - fbc-inject-lifecycle
       taskRef:
